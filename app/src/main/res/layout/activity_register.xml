@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_register"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:elevation="2dp"
+        android:paddingLeft="10dp"
+        android:layout_height="50dp"
+        android:background="#F7F7F7"
+        android:drawablePadding="8dp"
+        android:hint="宝妈的名称"
+        android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+        />
+
+    <EditText
+        android:id="@+id/userAge"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#F7F7F7"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_assignment_ind_black_24dp"
+        android:hint="宝妈的年龄"
+        android:elevation="2dp"
+        android:inputType="number"
+        android:paddingLeft="10dp"
+         />
+
+    <EditText
+        android:id="@+id/userHeight"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#F7F7F7"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_accessibility_black_24dp"
+        android:hint="宝妈身高(单位CM 身高不能改喔)"
+        android:elevation="2dp"
+        android:inputType="number"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <EditText
+        android:id="@+id/userWeight"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="8dp"
+        android:layout_marginRight="20dp"
+        android:background="#F7F7F7"
+        android:drawableLeft="@drawable/ic_dashboard_black_24dp"
+        android:hint="宝妈体重(单位kg=公斤 以后可以改)"
+        android:inputType="number"
+        android:elevation="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <EditText
+        android:id="@+id/userLastPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="8dp"
+        android:layout_marginRight="20dp"
+        android:background="#F7F7F7"
+        android:drawableLeft="@drawable/ic_pregnant_woman_black_24dp"
+        android:hint="成为宝妈的开始(末次月经)"
+        android:inputType="number"
+        android:elevation="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+    <EditText
+        android:id="@+id/userDueData"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="8dp"
+        android:layout_marginRight="20dp"
+        android:background="#F7F7F7"
+        android:drawableLeft="@drawable/ic_child_care_black_24dp"
+        android:hint="预产期 我帮你算"
+        android:inputType="number"
+        android:elevation="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="18sp"
+        android:textColor="#C1C5C8"
+        android:background="#F7F7F7"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:elevation="2dp"
+        android:text="开始用本APP"
+        />
+</LinearLayout>

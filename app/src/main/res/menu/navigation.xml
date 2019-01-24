@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/calorie_btn_mod1"
+        android:title="主食" />
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/calorie_btn_mod2"
+        android:title="蔬菜" />
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/calorie_btn_mod3"
+        android:title="肉蛋" />
+    <item
+        android:id="@+id/navigation_person"
+        android:icon="@drawable/calorie_btn_mod4"
+        android:title="饮料" />
+    <item
+        android:id="@+id/navigation_person2"
+        android:icon="@drawable/calorie_btn_mod5"
+        android:title="快餐" />
+</menu>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<litepal>
+    <dbname value="MyApp"></dbname>
+    <version value="9"></version>
+    <list>
+        <mapping class="com.example.joe.db.UserInfo"></mapping>
+        <mapping class="com.example.joe.db.CalendarInfo"></mapping>
+        <mapping class="com.example.joe.db.FoodName"></mapping>
+    </list>
+</litepal>

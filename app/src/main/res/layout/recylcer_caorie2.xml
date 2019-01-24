@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/food_name"
+        android:text="馒头"
+        android:textColor="#96928F"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calorie"
+        android:textColor="#96928F"
+        android:text="4大卡"
+        android:layout_toLeftOf="@id/xie"
+        android:layout_marginRight="5dp"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#96928F"
+        android:text="/"
+        android:id="@+id/xie"
+        android:layout_toLeftOf="@id/foodNumber"
+        android:layout_marginRight="5dp"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/foodNumber"
+        android:textColor="#96928F"
+        android:text="2g"
+        android:layout_toLeftOf="@id/delete_btn"
+        android:layout_marginRight="5dp"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:id="@+id/delete_btn"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>

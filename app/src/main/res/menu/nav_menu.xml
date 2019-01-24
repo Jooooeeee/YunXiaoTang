@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/nav_user_name"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="昵称"
+        />
+    <item android:id="@+id/nav_user_age"
+        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:title="年龄">
+    </item>
+    <item android:id="@+id/nav_user_height"
+        android:icon="@drawable/ic_accessibility_black_24dp"
+        android:title="身高"/>
+    <item android:id="@+id/nav_user_weight"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="体重"/>
+    <item android:id="@+id/nav_user_lastPeriod"
+        android:icon="@drawable/ic_pregnant_woman_black_24dp"
+        android:title="末次月经"/>
+    <item android:id="@+id/nav_user_dueData"
+        android:icon="@drawable/ic_child_care_black_24dp"
+        android:title="预产期"/>
+    <item android:id="@+id/nav_user_BMI"
+        android:icon="@drawable/ic_gesture_black_24dp"
+        android:title="BMI"/>
+    <item android:id="@+id/nav_user_tui"
+        android:icon="@drawable/ic_loyalty_black_24dp"
+        android:title="小知识推送"
+        />
+</group>
+</menu>
