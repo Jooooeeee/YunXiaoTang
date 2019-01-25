@@ -421,6 +421,10 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
             pref.apply();
         }else
         {
+            pref.putString("weight","");
+            pref.putString("sportHour","");
+            pref.putInt("mood",0);
+            pref.apply();
             Log.e("Recyler", "initData: " );
         }
     }

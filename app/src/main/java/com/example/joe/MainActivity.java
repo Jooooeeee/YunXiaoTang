@@ -22,12 +22,14 @@ import android.view.View;
 
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.joe.db.CalendarInfo;
 import com.example.joe.db.FoodName;
 import com.example.joe.db.UserInfo;
 import com.example.joe.gson.SaveDatas;
 import com.example.joe.service.MyService;
+import com.example.joe.util.MyApplication;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
@@ -351,7 +353,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             double booldSugars = Double.parseDouble(twoHourbooldSugarN);
             calendarInfo.setTodayTwoHourBooldSugarN(booldSugars);
         }
-            calendarInfo.updateAll("calendarId=?",date);
+        if(calendarInfo.saveOrUpdate("calendarId=?",date)){
+
+        }
+        else {
+            Toast.makeText(MainActivity.this,"出现了很奇怪的错误，请使用必杀技-重开APP",Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 }
