@@ -16,11 +16,14 @@
             android:gravity="center"
             android:id="@+id/news_title"
             android:padding="10dp"
-            android:textSize="20sp"
+            android:textSize="21sp"
+            android:textColor="#000"
             />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:background="#000"/>
         <TextView
             android:layout_width="match_parent"
@@ -29,6 +32,7 @@
             android:id="@+id/news_content"
             android:padding="15dp"
             android:textSize="18sp"
+            android:textColor="#000"
             android:scrollbars="vertical"
             />
     </LinearLayout>

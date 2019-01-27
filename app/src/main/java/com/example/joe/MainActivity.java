@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mdrawerLayout;
     private CalendarView calendarView;
     private TextView tv_month_day;
-
+    private TextView tv_current_day;
+    private TextView tv_year;
+    private TextView tv_lunar;
     private static DoublePicker doublePicker;
     private static DoublePicker doublePicker2;
     private static NumberPicker numberPicker;
@@ -94,7 +96,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         calendarView = findViewById(R.id.calendarView);
         tv_month_day=findViewById(R.id.tv_month_day);
+        tv_current_day=findViewById(R.id.tv_current_day);
         recyclerView = findViewById(R.id.recyclerView);
+        tv_year=findViewById(R.id.tv_year);
+        tv_lunar=findViewById(R.id.tv_lunar);
         FrameLayout fl_current=findViewById(R.id.fl_current);
         nav_btn=findViewById(R.id.nav_btn);
 
@@ -134,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.putString("date", date);
         editor.apply();
-
+        tv_current_day.setText(calendarView.getCurDay()+"");
         Intent startIntent  =   new Intent(this,MyService.class);
         startService(startIntent);
         alarm();
@@ -187,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onCalendarSelect(Calendar calendar, boolean isClick) {
                 if (isClick) {
                     tv_month_day.setText("孕小糖·"+calendar.getMonth() + "月"+calendar.getDay() + "日");
+                    tv_year.setText(calendar.getYear()+"");
+                    tv_lunar.setText(calendar.getLunar());
                      update();
                      date= calendar.getYear()+""+DateUtils.fillZero(calendar.getMonth())+DateUtils.fillZero(calendar.getDay());
                     SharedPreferences.Editor editor=getSharedPreferences("data",Context.MODE_PRIVATE).edit();
@@ -200,10 +207,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onMonthChange(int year, int month) {
-
                 Calendar calendar = calendarView.getSelectedCalendar();
-                tv_month_day.setText("孕小糖·"+calendar.getMonth() + "月"+"1"+ "日");
-
+                tv_month_day.setText("孕小糖·"+calendar.getMonth() + "月"+calendar.getDay()+ "日");
+                tv_year.setText(calendar.getYear()+"");
+                tv_lunar.setText(calendar.getLunar());
             }
         });
     }
