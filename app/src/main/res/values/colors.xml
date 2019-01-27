@@ -3,5 +3,7 @@
     <color name="colorPrimary">#fff</color>
     <color name="colorPrimaryDark">#fff</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="numberOne">#e0838e</color>
+    <color name="numberTwo">#F4606C</color>
+    <color name="numberThree">#e16985</color>
 </resources>

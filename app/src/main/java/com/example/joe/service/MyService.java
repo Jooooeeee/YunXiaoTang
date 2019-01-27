@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
@@ -57,6 +58,7 @@ public class MyService extends Service {
 
             AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
             Intent i2=new Intent("com.joe.example.broadcasttest.SHOW_NOTIFICATION");
+            i2.putExtra("type","1");
             i2.setComponent( new ComponentName( "com.example.joe" ,
                     "com.example.joe.service.ShowNotificationReceiver") );
             Calendar calendar = Calendar.getInstance();

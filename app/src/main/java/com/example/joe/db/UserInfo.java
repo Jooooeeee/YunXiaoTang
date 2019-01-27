@@ -18,7 +18,29 @@ public class UserInfo extends LitePalSupport implements Serializable {
     private double userWeight;
     private String userStart;//用户开始使用APP时间
     private String userLastPeriod;//最后一次月经时间
-    private String userDueData;//预产期
+    private String userDueData;//预产期产检次数
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
+
+    public UserInfo(int userId, String username, int userAge, double userHeight, double userWeight, String userStart, String userLastPeriod, String userDueData, int times) {
+        this.userId = userId;
+        this.username = username;
+        this.userAge = userAge;
+        this.userHeight = userHeight;
+        this.userWeight = userWeight;
+        this.userStart = userStart;
+        this.userLastPeriod = userLastPeriod;
+        this.userDueData = userDueData;
+        this.times = times;
+    }
+
+    private int times;//
 
     public UserInfo() {
     }

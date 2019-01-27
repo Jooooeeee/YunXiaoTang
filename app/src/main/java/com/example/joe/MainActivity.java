@@ -1,10 +1,14 @@
 package com.example.joe;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import cn.qqtheme.framework.picker.DoublePicker;
 import cn.qqtheme.framework.picker.NumberPicker;
@@ -51,8 +57,8 @@ import cn.qqtheme.framework.util.DateUtils;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mdrawerLayout;
     private CalendarView calendarView;
-    private TextView toolbar_month;
-    private TextView toolbar_day;
+    private TextView tv_month_day;
+
     private static DoublePicker doublePicker;
     private static DoublePicker doublePicker2;
     private static NumberPicker numberPicker;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<RecylerItem> recylerItems = new ArrayList<>();
     private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
+    private ImageButton nav_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,25 +90,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             saveDatas.initFoodName4();
             saveDatas.initFoodName5();
         }
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         calendarView = findViewById(R.id.calendarView);
-        toolbar_month = findViewById(R.id.toolbar_month);
+        tv_month_day=findViewById(R.id.tv_month_day);
         recyclerView = findViewById(R.id.recyclerView);
+        FrameLayout fl_current=findViewById(R.id.fl_current);
+        nav_btn=findViewById(R.id.nav_btn);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        toolbar_day = findViewById(R.id.toolbar_day);
+
         initRecyler();
         RecylerAdapter adapter = new RecylerAdapter(recylerItems);
 
         mdrawerLayout = findViewById(R.id.drawer_layout);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_dehaze_black_24dp);
-        }
 
-        navigationView.setCheckedItem(R.id.nav_user_name);
+
+       // navigationView.setCheckedItem(R.id.nav_user_name);
         navigationView.setNavigationItemSelectedListener(this);
         initNav(navigationView);
 
@@ -132,17 +137,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Intent startIntent  =   new Intent(this,MyService.class);
         startService(startIntent);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        alarm();
+        nav_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_user_tui:
-                        Intent i=new Intent(MainActivity.this,WenZhangBtnActivity.class);
-                        startActivity(i);
-                        break;
-                }
-                return true;
+            public void onClick(View view) {
+                mdrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        fl_current.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendarView.scrollToCurrent();
             }
         });
 
@@ -153,21 +158,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                mdrawerLayout.openDrawer(GravityCompat.START);
-                break;
-            default:
-        }
-        return true;
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         mdrawerLayout.closeDrawers();
+        switch (item.getItemId()){
+            case R.id.nav_user_tui:
+                Intent i=new Intent(MainActivity.this,WenZhangBtnActivity.class);
+                startActivity(i);
+                break;
+        }
         return true;
     }
 
@@ -185,8 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onCalendarSelect(Calendar calendar, boolean isClick) {
                 if (isClick) {
-                    toolbar_month.setText(calendar.getMonth() + "月");
-                    toolbar_day.setText(calendar.getDay() + "日");
+                    tv_month_day.setText("孕小糖·"+calendar.getMonth() + "月"+calendar.getDay() + "日");
                      update();
                      date= calendar.getYear()+""+DateUtils.fillZero(calendar.getMonth())+DateUtils.fillZero(calendar.getDay());
                     SharedPreferences.Editor editor=getSharedPreferences("data",Context.MODE_PRIVATE).edit();
@@ -200,9 +200,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onMonthChange(int year, int month) {
-                toolbar_month.setText(month + "月");
+
                 Calendar calendar = calendarView.getSelectedCalendar();
-                toolbar_day.setText(calendar.getDay() + "日");
+                tv_month_day.setText("孕小糖·"+calendar.getMonth() + "月"+"1"+ "日");
+
             }
         });
     }
@@ -261,11 +262,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         double bmiHeight=userInfo.getUserHeight()/100;
         String Bmi=String.format("%.1f",userInfo.getUserWeight()/(bmiHeight*bmiHeight));
-        item1.setTitle("本仙女的名称是："+userInfo.getUsername());
-        item2.setTitle("本仙女的年龄不过才："+userInfo.getUserAge());
-        item3.setTitle("本仙女高达："+userInfo.getUserHeight());
-        item4.setTitle("这只是虚胖："+userInfo.getUserWeight());
-        item5.setTitle("末次大姨妈："+userInfo.getUserLastPeriod());
+        item1.setTitle(userInfo.getUsername());
+        item2.setTitle("仙女的年龄不过才："+userInfo.getUserAge());
+        item3.setTitle("仙女身高："+userInfo.getUserHeight()+"CM");
+        item4.setTitle("这只是虚胖："+userInfo.getUserWeight()+"Kg");
+        item5.setTitle("末次月经："+userInfo.getUserLastPeriod());
         item6.setTitle("预计宝宝出生："+userInfo.getUserDueData());
         item7.setTitle("BMI："+Bmi);
     }
@@ -359,9 +360,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else {
             Toast.makeText(MainActivity.this,"出现了很奇怪的错误，请使用必杀技-重开APP",Toast.LENGTH_SHORT).show();
         }
+    }
+    private void alarm(){
+        AlarmManager am;
+        Intent i2=new Intent("com.joe.example.broadcasttest.SHOW_NOTIFICATION");
+        i2.putExtra("type","2");
+        i2.setComponent( new ComponentName( "com.example.joe" ,
+                "com.example.joe.service.ShowNotificationReceiver") );
+        PendingIntent pi=PendingIntent.getBroadcast(this, 11, i2,0);
+        long firstTime = SystemClock.elapsedRealtime();	//获取系统当前时间
+        long systemTime = System.currentTimeMillis();//java.lang.System.currentTimeMillis()，它返回从 UTC 1970 年 1 月 1 日午夜开始经过的毫秒数。
+
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8")); //  这里时区需要设置一下，不然会有8个小时的时间差
+        calendar.set(java.util.Calendar.MINUTE, 0);
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, 19);//设置为8：00点提醒
+        calendar.set(java.util.Calendar.SECOND, 0);
+        calendar.set(java.util.Calendar.MILLISECOND, 0);
+        //选择的定时时间
+        long selectTime = calendar.getTimeInMillis();	//计算出设定的时间
+
+        //  如果当前时间大于设置的时间，那么就从第二天的设定时间开始
+        if(systemTime > selectTime) {
+            calendar.add(java.util.Calendar.DAY_OF_MONTH, 1);
+            selectTime = calendar.getTimeInMillis();
+        }
+
+        long time = selectTime - systemTime;// 计算现在时间到设定时间的时间差
+        long my_Time = firstTime + time;//系统 当前的时间+时间差
+
+        // 进行闹铃注册
+        am=(AlarmManager)getSystemService(ALARM_SERVICE);
 
 
-
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, my_Time, AlarmManager.INTERVAL_DAY, pi);
     }
 }
 

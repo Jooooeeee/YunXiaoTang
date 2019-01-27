@@ -84,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                        userInfo.setUserLastPeriod(userLastPeriod2);
                        userInfo.setUsername(userName2);
                        userInfo.setUserId(1);
+                       userInfo.setTimes(0);
                        if (userInfo.save()){
                            finish();
                        }
