@@ -30,6 +30,7 @@ public class CalorieActivity extends AppCompatActivity {
     private static List<FoodName> calorieItemList=new ArrayList<>();
     private CalorieAdapter adapter;
     private TextView calorie_textview;
+    private TextView calorieCalender_textview;
     private double calorie=0;
     private int date;
     @Override
@@ -38,6 +39,7 @@ public class CalorieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calorie);
         Toolbar toolbar=findViewById(R.id.toolbar_calorie);
         Button addFood=findViewById(R.id.addFood);
+        calorieCalender_textview=findViewById(R.id.calorieCalender_textview);
         calorie_textview=findViewById(R.id.calorie_textview);
         RecyclerView recyclerView=findViewById(R.id.calorieRecycler);
         setSupportActionBar(toolbar);
@@ -74,6 +76,11 @@ public class CalorieActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
            setCalorie_textview();
         }
+        int year=date/10000;
+        int a=date/100;
+        int month=a%100;
+        int day=date%100;
+        calorieCalender_textview.setText(year+"."+month+"."+day);
     }
 
     @Override

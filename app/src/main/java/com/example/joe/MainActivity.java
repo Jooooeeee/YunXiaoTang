@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         calendarView = findViewById(R.id.calendarView);
         tv_month_day=findViewById(R.id.tv_month_day);
         tv_current_day=findViewById(R.id.tv_current_day);

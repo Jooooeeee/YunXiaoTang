@@ -11,7 +11,8 @@
         android:layout_marginLeft="20dp"
         android:id="@+id/food_name"
         android:text="馒头"
-        android:textColor="#96928F"
+        android:textColor="#9C9C9C"
+        android:layout_centerVertical="true"
         android:textSize="18sp"
         android:paddingTop="8dp"
         />
@@ -20,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/calorie"
-        android:textColor="#96928F"
+        android:textColor="#9C9C9C"
+        android:layout_centerVertical="true"
         android:text="4大卡"
         android:layout_toLeftOf="@id/xie"
         android:layout_marginRight="5dp"
@@ -30,30 +32,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#96928F"
+        android:textColor="#9C9C9C"
         android:text="/"
         android:id="@+id/xie"
         android:layout_toLeftOf="@id/foodNumber"
         android:layout_marginRight="5dp"
         android:textSize="18sp"
+        android:layout_centerVertical="true"
         android:paddingTop="8dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/foodNumber"
-        android:textColor="#96928F"
+        android:textColor="#9C9C9C"
         android:text="2g"
         android:layout_toLeftOf="@id/delete_btn"
         android:layout_marginRight="5dp"
         android:textSize="18sp"
         android:paddingTop="8dp"
+        android:layout_centerVertical="true"
         />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_delete_black_24dp"
         android:id="@+id/delete_btn"
+        android:background="@color/transparent"
         android:layout_alignParentRight="true"
         />
 
