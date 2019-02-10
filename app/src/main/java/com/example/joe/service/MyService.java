@@ -105,10 +105,14 @@ public class MyService extends Service {
             calendar9.setTime(date);
             calendar9.setTimeInMillis(calendar.getTimeInMillis());
             calendar9.add(Calendar.DATE, 280);
+            Calendar calendar10 = Calendar.getInstance();
+            calendar10.setTime(date);
+            calendar10.setTimeInMillis(calendar.getTimeInMillis());
+            calendar10.add(Calendar.DATE, 287);
             long timeInMills [] = {calendar.getTimeInMillis(),calendar1.getTimeInMillis(),calendar2.getTimeInMillis(),calendar3.getTimeInMillis(),calendar4.getTimeInMillis(),
-                    calendar5.getTimeInMillis(),calendar6.getTimeInMillis(),calendar7.getTimeInMillis(),calendar8.getTimeInMillis(),calendar9.getTimeInMillis()};
+                    calendar5.getTimeInMillis(),calendar6.getTimeInMillis(),calendar7.getTimeInMillis(),calendar8.getTimeInMillis(),calendar9.getTimeInMillis(),calendar10.getTimeInMillis()};
 
-            for (int i=1;i<11;i++){
+            for (int i=1;i<12;i++){
                 PendingIntent pendingIntent = PendingIntent.
                         getBroadcast(this, i, i2, PendingIntent.FLAG_UPDATE_CURRENT);
                 manager.set(AlarmManager.RTC,timeInMills[i-1],pendingIntent);

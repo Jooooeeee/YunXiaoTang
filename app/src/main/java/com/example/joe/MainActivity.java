@@ -1,16 +1,21 @@
 package com.example.joe;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -41,6 +46,8 @@ import com.haibin.calendarview.CalendarView;
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<String> options4Items=new ArrayList<>();
     private List<String> options3Items=new ArrayList<>();
     private String date;
+
     private List<UserInfo> userInfoList;
     private List<RecylerItem> recylerItems = new ArrayList<>();
     private static final String TAG = "MainActivity";
@@ -99,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_month_day=findViewById(R.id.tv_month_day);
         tv_current_day=findViewById(R.id.tv_current_day);
         recyclerView = findViewById(R.id.recyclerView);
+
         tv_year=findViewById(R.id.tv_year);
         tv_lunar=findViewById(R.id.tv_lunar);
         FrameLayout fl_current=findViewById(R.id.fl_current);
@@ -110,9 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecylerAdapter adapter = new RecylerAdapter(recylerItems);
 
         mdrawerLayout = findViewById(R.id.drawer_layout);
-
-
-       // navigationView.setCheckedItem(R.id.nav_user_name);
         navigationView.setNavigationItemSelectedListener(this);
         initNav(navigationView);
 
@@ -157,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        isShowNotification();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -375,15 +382,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         i2.putExtra("type","2");
         i2.setComponent( new ComponentName( "com.example.joe" ,
                 "com.example.joe.service.ShowNotificationReceiver") );
-        PendingIntent pi=PendingIntent.getBroadcast(this, 11, i2,0);
+        PendingIntent pi=PendingIntent.getBroadcast(this, 12, i2,0);
         long firstTime = SystemClock.elapsedRealtime();	//获取系统当前时间
         long systemTime = System.currentTimeMillis();//java.lang.System.currentTimeMillis()，它返回从 UTC 1970 年 1 月 1 日午夜开始经过的毫秒数。
+
 
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8")); //  这里时区需要设置一下，不然会有8个小时的时间差
         calendar.set(java.util.Calendar.MINUTE, 0);
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, 19);//设置为8：00点提醒
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, 19);//设置为19：00点提醒
         calendar.set(java.util.Calendar.SECOND, 0);
         calendar.set(java.util.Calendar.MILLISECOND, 0);
         //选择的定时时间
@@ -401,8 +409,88 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 进行闹铃注册
         am=(AlarmManager)getSystemService(ALARM_SERVICE);
 
-
         am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, my_Time, AlarmManager.INTERVAL_DAY, pi);
     }
+
+    private void isShowNotification(){
+        long day=dateDiff(userInfoList.get(0).getUserLastPeriod(),calendarView.getCurYear() + "-" + DateUtils.fillZero(calendarView.getCurMonth()) + "-" + calendarView.getCurDay(),"yyyy-MM-dd");
+        if (day<=14){
+            showNotification();
+        }
+    }
+
+    private void showNotification(){
+        NotificationManager notificationManager = (NotificationManager) MainActivity.this.getSystemService(NOTIFICATION_SERVICE);
+        Notification notification = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel("my_channel_03", "渠道名字2", NotificationManager.IMPORTANCE_LOW);
+            mChannel.enableLights(true);
+            Log.i(TAG, mChannel.toString());
+            notificationManager.createNotificationChannel(mChannel);
+            notification = new Notification.Builder(MainActivity.this)
+                    .setChannelId("my_channel_03")
+                    .setContentTitle("预约住院")
+                    .setContentText("宝妈做好分娩准备，预约入院啦！")
+                    .setWhen(System.currentTimeMillis())
+                    .setSmallIcon(R.mipmap.logo)
+                    .setAutoCancel(true)
+                    .setLargeIcon(BitmapFactory.decodeResource(MainActivity.this.getResources(), R.mipmap.logo))
+                    .build();
+        } else {
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this)
+                    .setContentTitle("预约住院")
+                    .setContentText("宝妈做好分娩准备，预约入院啦！")
+                    .setSmallIcon(R.mipmap.logo)
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setWhen(System.currentTimeMillis())
+                    .setAutoCancel(true)
+                    .setLargeIcon(BitmapFactory.decodeResource(MainActivity.this.getResources(), R.mipmap.logo))
+                    .setOngoing(true);
+
+            notification = notificationBuilder.build();
+        }
+        notificationManager.notify(111125, notification);
+    }
+
+    private long dateDiff(String startTime, String endTime, String format) {
+        // 按照传入的格式生成一个simpledateformate对象
+        SimpleDateFormat sd = new SimpleDateFormat(format);
+        long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
+        long nh = 1000 * 60 * 60;// 一小时的毫秒数
+        long nm = 1000 * 60;// 一分钟的毫秒数
+        long ns = 1000;// 一秒钟的毫秒数
+        long diff;
+        long day = 0;
+        //    Log.e("RecylerAdapter", "dateDiff: ");
+        try {
+
+            // 获得两个时间的毫秒时间差异
+            diff = sd.parse(endTime).getTime()
+                    - sd.parse(startTime).getTime();
+
+            day = diff / nd;// 计算差多少天
+            long hour = diff % nd / nh;// 计算差多少小时
+            long min = diff % nd % nh / nm;// 计算差多少分钟
+            long sec = diff % nd % nh % nm / ns;// 计算差多少秒
+            // 输出结果
+            if (day>=1) {
+                return day;
+            }else {
+                if (day==0) {
+                    return 1;
+                }else {
+                    return 0;
+                }
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
+    }
+
+
 }
 

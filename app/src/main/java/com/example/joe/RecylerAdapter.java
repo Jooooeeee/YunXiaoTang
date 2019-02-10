@@ -23,10 +23,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.joe.db.CalendarInfo;
+import com.example.joe.db.UserInfo;
 import com.example.joe.util.MyApplication;
 import org.litepal.LitePal;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import javax.security.auth.login.LoginException;
+
 import cn.qqtheme.framework.picker.DoublePicker;
 import cn.qqtheme.framework.picker.NumberPicker;
 import cn.qqtheme.framework.util.DateUtils;
@@ -41,6 +49,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
        private final List<String> options4Items=new ArrayList<>();
        private double weight,sportHourt,booldSugar,twoHourbooldSugar,twoHourbooldSugarM,twoHourbooldSugarN;
        private int mood;
+       private long yun_week,yun_day;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View recyclerView;
@@ -72,6 +81,10 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
         final TextView imageaTwoHourBooldSugarM=view.findViewById(R.id.imageaTwoHourBooldSugarM);
         final RadioGroup radioGroup=view.findViewById(R.id.radioGroup);
 
+        final TextView tv_yun_week=view.findViewById(R.id.tv_yun_week);
+
+
+
 
         SpannableString spannableString;
         SpannableString spannableString2;
@@ -89,6 +102,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
         Drawable drawable=parent.getContext().getResources().getDrawable(R.drawable.ic_more_horiz_black_24dp);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         ImageSpan imageSpan = new ImageSpan(drawable);
+
 
         if (weight!=0.0){
             spannableString=new SpannableString(weight+"kg");
@@ -168,6 +182,8 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
         imageaTwoHourBooldSugarM.setMovementMethod(LinkMovementMethod.getInstance());
         imageaTwoHourBooldSugarM.setHighlightColor(Color.parseColor("#36969696"));
         imageaTwoHourBooldSugarM.setText(spannableString4M);
+
+        tv_yun_week.setText("·孕"+yun_week+"周"+yun_day+"天");
 
         //体重点击监听
         imageaTextview_weight.setOnClickListener(new View.OnClickListener() {
@@ -406,6 +422,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
         String date=preferences.getString("date","");
         SharedPreferences.Editor pref=parent.getContext().getSharedPreferences("data",Context.MODE_PRIVATE).edit();
         List<CalendarInfo> calendarInfoList=LitePal.where("calendarId = ?",date+"").find(CalendarInfo.class);
+        List<UserInfo> userInfos=LitePal.findAll(UserInfo.class);
         if (!calendarInfoList.isEmpty()){
             CalendarInfo calendarInfo=calendarInfoList.get(0);
             weight=calendarInfo.getTodayWeight();
@@ -426,6 +443,16 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
             pref.putInt("mood",0);
             pref.apply();
             Log.e("Recyler", "initData: " );
+        }
+        if (!userInfos.isEmpty()){
+
+            StringBuilder stringBuilder=new StringBuilder(date);
+            stringBuilder.insert(4,"-");
+            stringBuilder.insert(7,"-");
+            long day=dateDiff(userInfos.get(0).getUserLastPeriod(),stringBuilder.toString(),"yyyy-MM-dd");
+            Log.e("RecylerAdapter", "initData: " +stringBuilder.toString());
+             yun_week=day/7;
+             yun_day=day%7;
         }
     }
 
@@ -464,5 +491,43 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
         picker.setFirstLabel("", ".");
         picker.setSecondLabel("", b);
        return picker;
+    }
+    private long dateDiff(String startTime, String endTime, String format) {
+        // 按照传入的格式生成一个simpledateformate对象
+        SimpleDateFormat sd = new SimpleDateFormat(format);
+        long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
+        long nh = 1000 * 60 * 60;// 一小时的毫秒数
+        long nm = 1000 * 60;// 一分钟的毫秒数
+        long ns = 1000;// 一秒钟的毫秒数
+        long diff;
+        long day = 0;
+    //    Log.e("RecylerAdapter", "dateDiff: ");
+        try {
+
+            // 获得两个时间的毫秒时间差异
+            diff = sd.parse(endTime).getTime()
+                    - sd.parse(startTime).getTime();
+
+            day = diff / nd;// 计算差多少天
+            long hour = diff % nd / nh;// 计算差多少小时
+            long min = diff % nd % nh / nm;// 计算差多少分钟
+            long sec = diff % nd % nh % nm / ns;// 计算差多少秒
+            // 输出结果
+            if (day>=1) {
+                return day;
+            }else {
+                if (day==0) {
+                    return 1;
+                }else {
+                    return 0;
+                }
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
     }
 }

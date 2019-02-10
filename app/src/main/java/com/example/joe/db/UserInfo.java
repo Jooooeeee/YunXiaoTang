@@ -19,6 +19,7 @@ public class UserInfo extends LitePalSupport implements Serializable {
     private String userStart;//用户开始使用APP时间
     private String userLastPeriod;//最后一次月经时间
     private String userDueData;//预产期产检次数
+    private int times;
 
     public int getTimes() {
         return times;
@@ -40,7 +41,7 @@ public class UserInfo extends LitePalSupport implements Serializable {
         this.times = times;
     }
 
-    private int times;//
+
 
     public UserInfo() {
     }

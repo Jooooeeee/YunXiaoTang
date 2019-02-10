@@ -50,11 +50,12 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
         String nickName="";
         if (!list.isEmpty()){
             userInfo=list.get(0);
-            times=userInfo.getTimes();
+            times=userInfo.getTimes()+1;
             nickName=userInfo.getUsername();
         }else {
-            times=0;
+            times=0+1;
         }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
                 mChannel.enableLights(true);
@@ -64,7 +65,7 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
                 notification = new Notification.Builder(context)
                         .setChannelId(id)
                         .setContentTitle("产检通知")
-                        .setContentText("宝妈该去第" + times + 1 + "产检啦")
+                        .setContentText("宝妈该去第" + times  + "次产检啦")
                         .setWhen(System.currentTimeMillis())
                         .setSmallIcon(R.mipmap.logo)
                         .setAutoCancel(true)
@@ -74,7 +75,7 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
             } else {
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                         .setContentTitle("产检通知")
-                        .setContentText("宝妈该去第" + times + 1 + "产检啦")
+                        .setContentText("宝妈该去第" + times  + "次产检啦")
                         .setSmallIcon(R.mipmap.logo)
                         .setDefaults(Notification.DEFAULT_VIBRATE)
                         .setWhen(System.currentTimeMillis())
@@ -87,7 +88,9 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
             }
 
 
-            userInfo.setTimes(++times);
+            Log.e(TAG, "onReceive: "+times );
+
+            userInfo.setTimes(times);
             userInfo.saveOrUpdate("username=?", nickName);
             notificationManager.notify(111123, notification);
             Log.i("repeat", "showNotification");

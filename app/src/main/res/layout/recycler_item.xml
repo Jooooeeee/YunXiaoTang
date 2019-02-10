@@ -4,10 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="1dp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_height="63dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="孕期记录"
+            android:textColor="#2F2F2F"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:id="@+id/tv_yun_week"
+            android:textColor="#969696"
+            android:text="·孕一周" />
+
+    </LinearLayout>
+    <LinearLayout
         android:background="#ffff"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_marginTop="1pt"
+
         android:layout_height="wrap_content">
 
         <ImageView

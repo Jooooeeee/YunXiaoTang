@@ -68,7 +68,7 @@
         android:layout_marginRight="20dp"
         android:background="#F7F7F7"
         android:drawableLeft="@drawable/ic_dashboard_black_24dp"
-        android:hint="宝妈体重(单位kg=公斤 以后可以改)"
+        android:hint="孕前体重(单位kg=公斤)"
         android:inputType="number"
         android:elevation="2dp"
         android:paddingLeft="10dp"

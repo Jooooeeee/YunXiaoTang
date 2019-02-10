@@ -13,7 +13,7 @@
         android:theme="@style/TranslucentTheme">
         <activity
             android:name=".MainActivity"
-            android:label="孕小糖·"
+            android:label="孕小糖"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
