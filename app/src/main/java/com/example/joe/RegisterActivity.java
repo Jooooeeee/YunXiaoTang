@@ -6,20 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
+import com.example.joe.db.IsStartNotifi;
 import com.example.joe.db.UserInfo;
+import com.example.joe.gson.SaveDatas;
 import com.example.joe.util.MyApplication;
-
+import org.litepal.LitePal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.qqtheme.framework.picker.DatePicker;
 
@@ -102,7 +102,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
+        List<IsStartNotifi> isStartNotifis=LitePal.findAll(IsStartNotifi.class);
+        if (isStartNotifis.isEmpty()){
+            SaveDatas saveDatas=new SaveDatas();
+            saveDatas.initIsStartNotifi();
+        }
     }
 
     public void dataPicker(final DatePicker picker ){

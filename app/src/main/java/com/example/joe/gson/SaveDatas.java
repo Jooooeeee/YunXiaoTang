@@ -1,8 +1,15 @@
 package com.example.joe.gson;
 
 import com.example.joe.db.FoodName;
+import com.example.joe.db.IsStartNotifi;
 
 public class SaveDatas {
+
+    /*已经发过通知*/
+    public static int HAVEUSE=1;
+
+    /*还没发通知*/
+    public static int NOUSER=0;
     public SaveDatas() {
     }
     public void initFoodName(){
@@ -108,5 +115,10 @@ public class SaveDatas {
         fangbianmian.save();
         FoodName pisa=new FoodName(45,"披萨",230,100);
         pisa.save();
+    }
+    //初始化通知
+    public void initIsStartNotifi(){
+        IsStartNotifi isStartNotifi=new IsStartNotifi(NOUSER,NOUSER,NOUSER,NOUSER,NOUSER,NOUSER,NOUSER,NOUSER,NOUSER,NOUSER,NOUSER);
+        isStartNotifi.save();
     }
 }

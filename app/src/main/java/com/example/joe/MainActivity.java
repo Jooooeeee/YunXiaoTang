@@ -40,6 +40,7 @@ import com.example.joe.db.UserInfo;
 import com.example.joe.gson.SaveDatas;
 import com.example.joe.service.MyService;
 import com.example.joe.util.MyApplication;
+import com.example.joe.util.SystemUtils;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
@@ -413,9 +414,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void isShowNotification(){
-        long day=dateDiff(userInfoList.get(0).getUserLastPeriod(),calendarView.getCurYear() + "-" + DateUtils.fillZero(calendarView.getCurMonth()) + "-" + calendarView.getCurDay(),"yyyy-MM-dd");
+        long day=SystemUtils.dateDiff(userInfoList.get(0).getUserLastPeriod(),calendarView.getCurYear() + "-" + DateUtils.fillZero(calendarView.getCurMonth()) + "-" + calendarView.getCurDay(),"yyyy-MM-dd");
         if (day<=14){
-            showNotification();
+            SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
+            String showNotifiDate=sharedPreferences.getString("curdate","a");
+            if (!showNotifiDate.equals(calendarView.getCurYear()+"-"+DateUtils.fillZero(calendarView.getCurMonth())+"-"+calendarView.getCurDay())) {
+                showNotification();
+            }
         }
     }
 
@@ -450,46 +455,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             notification = notificationBuilder.build();
         }
         notificationManager.notify(111125, notification);
+
+        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+        editor.putString("curdate",calendarView.getCurYear()+"-"+DateUtils.fillZero(calendarView.getCurMonth())+"-"+calendarView.getCurDay());
+        editor.apply();
     }
 
-    private long dateDiff(String startTime, String endTime, String format) {
-        // 按照传入的格式生成一个simpledateformate对象
-        SimpleDateFormat sd = new SimpleDateFormat(format);
-        long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
-        long nh = 1000 * 60 * 60;// 一小时的毫秒数
-        long nm = 1000 * 60;// 一分钟的毫秒数
-        long ns = 1000;// 一秒钟的毫秒数
-        long diff;
-        long day = 0;
-        //    Log.e("RecylerAdapter", "dateDiff: ");
-        try {
 
-            // 获得两个时间的毫秒时间差异
-            diff = sd.parse(endTime).getTime()
-                    - sd.parse(startTime).getTime();
-
-            day = diff / nd;// 计算差多少天
-            long hour = diff % nd / nh;// 计算差多少小时
-            long min = diff % nd % nh / nm;// 计算差多少分钟
-            long sec = diff % nd % nh % nm / ns;// 计算差多少秒
-            // 输出结果
-            if (day>=1) {
-                return day;
-            }else {
-                if (day==0) {
-                    return 1;
-                }else {
-                    return 0;
-                }
-
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
-
-    }
 
 
 }

@@ -11,7 +11,9 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.example.joe.db.IsStartNotifi;
 import com.example.joe.db.UserInfo;
+import com.example.joe.gson.SaveDatas;
 
 import org.litepal.LitePal;
 
@@ -23,6 +25,7 @@ import java.util.List;
 
 public class MyService extends Service {
     private Date date;
+    private int notifiTimes[]=new int[11];
     public MyService() {
     }
 
@@ -36,6 +39,8 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
         List<UserInfo> userInfos=LitePal.findAll(UserInfo.class);
+        List<IsStartNotifi> isStartNotifis=LitePal.findAll(IsStartNotifi.class);
+
         if (!userInfos.isEmpty()) {
             String dueData =userInfos.get(0).getUserLastPeriod();
             SimpleDateFormat sdf = new SimpleDateFormat();
@@ -49,13 +54,15 @@ public class MyService extends Service {
         else{
             stopSelf();
         }
-
+        if (!isStartNotifis.isEmpty()){
+            IsStartNotifi isStartNotifi=isStartNotifis.get(0);
+            initNotifiTimes(isStartNotifi);
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(date!=null){
-
             AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
             Intent i2=new Intent("com.joe.example.broadcasttest.SHOW_NOTIFICATION");
             i2.putExtra("type","1");
@@ -65,10 +72,6 @@ public class MyService extends Service {
             calendar.setTime(date);
             calendar.setTimeInMillis(calendar.getTimeInMillis());
             calendar.add(Calendar.DATE, 42);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-            Log.e("onStartCommand", "onStartCommand: "+ sdf.format(calendar.getTime()) );
-            Log.e("onStartCommand", "onStartCommand: "+ sdf.format(date) );
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(date);
             calendar1.setTimeInMillis(calendar.getTimeInMillis());
@@ -109,17 +112,34 @@ public class MyService extends Service {
             calendar10.setTime(date);
             calendar10.setTimeInMillis(calendar.getTimeInMillis());
             calendar10.add(Calendar.DATE, 287);
-            long timeInMills [] = {calendar.getTimeInMillis(),calendar1.getTimeInMillis(),calendar2.getTimeInMillis(),calendar3.getTimeInMillis(),calendar4.getTimeInMillis(),
-                    calendar5.getTimeInMillis(),calendar6.getTimeInMillis(),calendar7.getTimeInMillis(),calendar8.getTimeInMillis(),calendar9.getTimeInMillis(),calendar10.getTimeInMillis()};
+            long calendarTimeInMillis=calendar.getTimeInMillis();
+            long timeInMills [] = {calendarTimeInMillis,calendar1.getTimeInMillis()-calendarTimeInMillis,calendar2.getTimeInMillis()-calendarTimeInMillis,calendar3.getTimeInMillis()-calendarTimeInMillis,calendar4.getTimeInMillis()-calendarTimeInMillis,
+                    calendar5.getTimeInMillis()-calendarTimeInMillis,calendar6.getTimeInMillis()-calendarTimeInMillis,calendar7.getTimeInMillis()-calendarTimeInMillis,calendar8.getTimeInMillis()-calendarTimeInMillis,calendar9.getTimeInMillis()-calendarTimeInMillis,calendar10.getTimeInMillis()-calendarTimeInMillis};
 
-            for (int i=1;i<12;i++){
-                PendingIntent pendingIntent = PendingIntent.
-                        getBroadcast(this, i, i2, PendingIntent.FLAG_UPDATE_CURRENT);
-                manager.set(AlarmManager.RTC,timeInMills[i-1],pendingIntent);
+            for (int i=0;i<notifiTimes.length;i++){
+
+                if (notifiTimes[i]==SaveDatas.NOUSER){
+                    PendingIntent pendingIntent = PendingIntent.
+                            getBroadcast(this, i+1, i2, PendingIntent.FLAG_UPDATE_CURRENT);
+                    manager.set(AlarmManager.RTC,timeInMills[i],pendingIntent);
+                  //  Log.e("notifiTimes", "onStartCommand: "+timeInMills[i]);
+                }
             }
 
         }
-
         return super.onStartCommand(intent, flags, startId);
+    }
+    private void initNotifiTimes(IsStartNotifi isStartNotifi){
+            notifiTimes[0] = isStartNotifi.getSix();
+            notifiTimes[1] = isStartNotifi.getFourteen();
+            notifiTimes[2] = isStartNotifi.getTwenty();
+            notifiTimes[3] = isStartNotifi.getTwenty_four();
+            notifiTimes[4] = isStartNotifi.getTwenty_eight();
+            notifiTimes[5] = isStartNotifi.getThirty_two();
+            notifiTimes[6] = isStartNotifi.getThirty_seven();
+            notifiTimes[7] = isStartNotifi.getThirty_eight();
+            notifiTimes[8] = isStartNotifi.getThirty_nine();
+            notifiTimes[9] = isStartNotifi.getForty();
+            notifiTimes[10] = isStartNotifi.getForty_one();
     }
 }
