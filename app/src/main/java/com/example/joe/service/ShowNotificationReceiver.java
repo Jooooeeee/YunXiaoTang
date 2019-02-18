@@ -100,10 +100,12 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
                 notification = notificationBuilder.build();
             }
 
-            notificationManager.notify(111123, notification);
             List<IsStartNotifi> isStartNotifiLists=LitePal.findAll(IsStartNotifi.class);
             IsStartNotifi isStartNotifi=isStartNotifiLists.get(0);
             saveNotifi(times,isStartNotifi);
+            Log.e(TAG, "onReceive: "+"aaaaaaa");
+            notificationManager.notify(111123, notification);
+
         }
         else if (type.equals("2")){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -115,7 +117,7 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
                 notification = new Notification.Builder(context)
                         .setChannelId(id)
                         .setContentTitle("运动通知")
-                        .setContentText("宝妈该去运动啦！")
+                        .setContentText("建议宝妈在13周之后再开始运动，也可在医生的建议下选择适合自己的运动开始时间噢！")
                         .setWhen(System.currentTimeMillis())
                         .setSmallIcon(R.mipmap.logo)
                         .setAutoCancel(true)
@@ -125,7 +127,7 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
             } else {
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                         .setContentTitle("运动通知")
-                        .setContentText("宝妈该去运动啦！")
+                        .setContentText("建议宝妈在13周之后再开始运动，也可在医生的建议下选择适合自己的运动开始时间噢！")
                         .setSmallIcon(R.mipmap.logo)
                         .setDefaults(Notification.DEFAULT_VIBRATE)
                         .setWhen(System.currentTimeMillis())
@@ -146,31 +148,86 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
             isStartNotifi.setSix(SaveDatas.HAVEUSE);
         }
         else if (times>=14&&times<=19){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
             isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
         }
         else if (times>=20&&times<=23){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
             isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
         }
         else if (times>=24&&times<=27){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
             isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
         }
         else if (times>=28&&times<=31){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
             isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
         } else if (times>=32&&times<=36){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
             isStartNotifi.setThirty_two(SaveDatas.HAVEUSE);
         }if (times==37){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_two(SaveDatas.HAVEUSE);
             isStartNotifi.setThirty_seven(SaveDatas.HAVEUSE);
         }
         if (times==38){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_two(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_seven(SaveDatas.HAVEUSE);
             isStartNotifi.setThirty_eight(SaveDatas.HAVEUSE);
         }
         if (times==39){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_two(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_seven(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_eight(SaveDatas.HAVEUSE);
             isStartNotifi.setThirty_nine(SaveDatas.HAVEUSE);
         }
         if (times==40){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_two(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_seven(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_nine(SaveDatas.HAVEUSE);
             isStartNotifi.setForty(SaveDatas.HAVEUSE);
         }
         if (times==41){
+            isStartNotifi.setSix(SaveDatas.HAVEUSE);
+            isStartNotifi.setFourteen(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_four(SaveDatas.HAVEUSE);
+            isStartNotifi.setTwenty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_two(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_seven(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_eight(SaveDatas.HAVEUSE);
+            isStartNotifi.setThirty_nine(SaveDatas.HAVEUSE);
+            isStartNotifi.setForty(SaveDatas.HAVEUSE);
             isStartNotifi.setForty_one(SaveDatas.HAVEUSE);
         }
         isStartNotifi.save();
@@ -181,7 +238,6 @@ public class ShowNotificationReceiver extends BroadcastReceiver {
         }
         else if (times>=14&&times<=19){
             times=14;
-            Log.e(TAG, "getTimes: " );
         }
         else if (times>=20&&times<=23){
             times=20;

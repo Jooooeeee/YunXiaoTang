@@ -39,7 +39,7 @@ public class MyService extends Service {
     public void onCreate() {
         super.onCreate();
         List<UserInfo> userInfos=LitePal.findAll(UserInfo.class);
-        List<IsStartNotifi> isStartNotifis=LitePal.findAll(IsStartNotifi.class);
+
 
         if (!userInfos.isEmpty()) {
             String dueData =userInfos.get(0).getUserLastPeriod();
@@ -54,78 +54,35 @@ public class MyService extends Service {
         else{
             stopSelf();
         }
-        if (!isStartNotifis.isEmpty()){
-            IsStartNotifi isStartNotifi=isStartNotifis.get(0);
-            initNotifiTimes(isStartNotifi);
-        }
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(date!=null){
+            List<IsStartNotifi> isStartNotifis=LitePal.findAll(IsStartNotifi.class);
+            if (!isStartNotifis.isEmpty()){
+                IsStartNotifi isStartNotifi=isStartNotifis.get(0);
+                initNotifiTimes(isStartNotifi);
+            }
             AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
             Intent i2=new Intent("com.joe.example.broadcasttest.SHOW_NOTIFICATION");
             i2.putExtra("type","1");
             i2.setComponent( new ComponentName( "com.example.joe" ,
                     "com.example.joe.service.ShowNotificationReceiver") );
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.setTimeInMillis(calendar.getTimeInMillis());
-            calendar.add(Calendar.DATE, 42);
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.setTime(date);
-            calendar1.setTimeInMillis(calendar.getTimeInMillis());
-            calendar1.add(Calendar.DATE, 98);
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(date);
-            calendar2.setTimeInMillis(calendar.getTimeInMillis());
-            calendar2.add(Calendar.DATE, 140);
-            Calendar calendar3 = Calendar.getInstance();
-            calendar3.setTime(date);
-            calendar3.setTimeInMillis(calendar.getTimeInMillis());
-            calendar3.add(Calendar.DATE, 168);
-            Calendar calendar4 = Calendar.getInstance();
-            calendar4.setTime(date);
-            calendar4.setTimeInMillis(calendar.getTimeInMillis());
-            calendar4.add(Calendar.DATE, 196);
-            Calendar calendar5 = Calendar.getInstance();
-            calendar5.setTime(date);
-            calendar5.setTimeInMillis(calendar.getTimeInMillis());
-            calendar5.add(Calendar.DATE, 224);
-            Calendar calendar6 = Calendar.getInstance();
-            calendar6.setTime(date);
-            calendar6.setTimeInMillis(calendar.getTimeInMillis());
-            calendar6.add(Calendar.DATE, 259);
-            Calendar calendar7 = Calendar.getInstance();
-            calendar7.setTime(date);
-            calendar7.setTimeInMillis(calendar.getTimeInMillis());
-            calendar7.add(Calendar.DATE, 266);
-            Calendar calendar8 = Calendar.getInstance();
-            calendar8.setTime(date);
-            calendar8.setTimeInMillis(calendar.getTimeInMillis());
-            calendar8.add(Calendar.DATE, 273);
-            Calendar calendar9 = Calendar.getInstance();
-            calendar9.setTime(date);
-            calendar9.setTimeInMillis(calendar.getTimeInMillis());
-            calendar9.add(Calendar.DATE, 280);
-            Calendar calendar10 = Calendar.getInstance();
-            calendar10.setTime(date);
-            calendar10.setTimeInMillis(calendar.getTimeInMillis());
-            calendar10.add(Calendar.DATE, 287);
-            long calendarTimeInMillis=calendar.getTimeInMillis();
-            long timeInMills [] = {calendarTimeInMillis,calendar1.getTimeInMillis()-calendarTimeInMillis,calendar2.getTimeInMillis()-calendarTimeInMillis,calendar3.getTimeInMillis()-calendarTimeInMillis,calendar4.getTimeInMillis()-calendarTimeInMillis,
-                    calendar5.getTimeInMillis()-calendarTimeInMillis,calendar6.getTimeInMillis()-calendarTimeInMillis,calendar7.getTimeInMillis()-calendarTimeInMillis,calendar8.getTimeInMillis()-calendarTimeInMillis,calendar9.getTimeInMillis()-calendarTimeInMillis,calendar10.getTimeInMillis()-calendarTimeInMillis};
 
+            long timeInMills[]=initCalendar();
             for (int i=0;i<notifiTimes.length;i++){
 
                 if (notifiTimes[i]==SaveDatas.NOUSER){
                     PendingIntent pendingIntent = PendingIntent.
-                            getBroadcast(this, i+1, i2, PendingIntent.FLAG_UPDATE_CURRENT);
+                            getBroadcast(this, i+1, i2, PendingIntent.FLAG_ONE_SHOT);
                     manager.set(AlarmManager.RTC,timeInMills[i],pendingIntent);
-                  //  Log.e("notifiTimes", "onStartCommand: "+timeInMills[i]);
+                    //pendingIntent.cancel();
+                    Log.e("notifiTimes", "onStartCommand: "+timeInMills[i]);
                 }
+                Log.e("notifiTimes", "onStartCommand: "+notifiTimes[i] );
             }
-
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -141,5 +98,58 @@ public class MyService extends Service {
             notifiTimes[8] = isStartNotifi.getThirty_nine();
             notifiTimes[9] = isStartNotifi.getForty();
             notifiTimes[10] = isStartNotifi.getForty_one();
+    }
+    private long[] initCalendar(){
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        //long nowTimeinMills=calendar.getTimeInMillis();
+        calendar.setTimeInMillis(calendar.getTimeInMillis());
+        calendar.add(Calendar.DATE, 42);
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(date);
+        calendar1.setTimeInMillis(calendar.getTimeInMillis());
+        calendar1.add(Calendar.DATE, 56);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(date);
+        calendar2.setTimeInMillis(calendar.getTimeInMillis());
+        calendar2.add(Calendar.DATE, 98);
+        Calendar calendar3 = Calendar.getInstance();
+        calendar3.setTime(date);
+        calendar3.setTimeInMillis(calendar.getTimeInMillis());
+        calendar3.add(Calendar.DATE, 126);
+        Calendar calendar4 = Calendar.getInstance();
+        calendar4.setTime(date);
+        calendar4.setTimeInMillis(calendar.getTimeInMillis());
+        calendar4.add(Calendar.DATE, 154);
+        Calendar calendar5 = Calendar.getInstance();
+        calendar5.setTime(date);
+        calendar5.setTimeInMillis(calendar.getTimeInMillis());
+        calendar5.add(Calendar.DATE, 182);
+        Calendar calendar6 = Calendar.getInstance();
+        calendar6.setTime(date);
+        calendar6.setTimeInMillis(calendar.getTimeInMillis());
+        calendar6.add(Calendar.DATE, 217);
+        Calendar calendar7 = Calendar.getInstance();
+        calendar7.setTime(date);
+        calendar7.setTimeInMillis(calendar.getTimeInMillis());
+        calendar7.add(Calendar.DATE, 224);
+        Calendar calendar8 = Calendar.getInstance();
+        calendar8.setTime(date);
+        calendar8.setTimeInMillis(calendar.getTimeInMillis());
+        calendar8.add(Calendar.DATE, 231);
+        Calendar calendar9 = Calendar.getInstance();
+        calendar9.setTime(date);
+        calendar9.setTimeInMillis(calendar.getTimeInMillis());
+        calendar9.add(Calendar.DATE, 238);
+        Calendar calendar10 = Calendar.getInstance();
+        calendar10.setTime(date);
+        calendar10.setTimeInMillis(calendar.getTimeInMillis());
+        calendar10.add(Calendar.DATE, 245);
+        long calendarTimeInMillis=calendar.getTimeInMillis();
+        long timeInMills [] = {calendarTimeInMillis,calendar1.getTimeInMillis(),calendar2.getTimeInMillis(),calendar3.getTimeInMillis(),calendar4.getTimeInMillis(),
+                calendar5.getTimeInMillis(),calendar6.getTimeInMillis(),calendar7.getTimeInMillis(),calendar8.getTimeInMillis(),calendar9.getTimeInMillis(),calendar10.getTimeInMillis()};
+        return timeInMills;
     }
 }
