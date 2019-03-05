@@ -34,9 +34,16 @@ public class WenActivity extends AppCompatActivity {
         }
         String title=getIntent().getStringExtra("title");
         String content=getIntent().getStringExtra("content");
+        String content2=getIntent().getStringExtra("content2");
         int isHaveImage=getIntent().getIntExtra("isHaveImage",0);
         NewsContentFragment newsContentFragment=(NewsContentFragment) getSupportFragmentManager().findFragmentById(R.id.news_content_fragment);
-        newsContentFragment.refresh(title,content,isHaveImage);
+        if (content2!=null&&!content2.isEmpty()) {
+            newsContentFragment.refresh(title,content,content2,isHaveImage);
+        }
+        else {
+
+            newsContentFragment.refresh(title, content, isHaveImage);
+        }
     }
 
     @Override

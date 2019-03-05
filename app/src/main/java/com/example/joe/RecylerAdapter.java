@@ -305,11 +305,11 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
                     public void onPicked(int selectedFirstIndex, int selectedSecondIndex) {
                         imageaBooldSugar.setText(options3Items.get(selectedFirstIndex)+"."+options4Items.get(selectedSecondIndex)+"mmol/L");
                         double booldSugar=Integer.parseInt(options3Items.get(selectedFirstIndex))+Integer.parseInt(options4Items.get(selectedSecondIndex))/100;
-                        if (booldSugar>6.19){
+                        if (booldSugar>5.6){
                             Toast.makeText(MyApplication.getContext(),"宝妈的血糖值高了！！",Toast.LENGTH_SHORT).show();
                             imageaBooldSugar.setTextColor(Color.rgb(255,0,0));
                         }
-                        else if (booldSugar<3.15){
+                        else if (booldSugar<3.3){
                             Toast.makeText(MyApplication.getContext(),"宝妈的血糖值低了！！",Toast.LENGTH_SHORT).show();
                             imageaBooldSugar.setTextColor(Color.rgb(255,0,0));
                         }
@@ -334,7 +334,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
                     public void onPicked(int selectedFirstIndex, int selectedSecondIndex) {
                         imageaTwoHourBooldSugar.setText(options3Items.get(selectedFirstIndex)+"."+options4Items.get(selectedSecondIndex)+"mmol/L");
                         double booldSugar=Integer.parseInt(options3Items.get(selectedFirstIndex))+Integer.parseInt(options4Items.get(selectedSecondIndex))/100;
-                        if (booldSugar>7.8){
+                        if (booldSugar>6.7){
                             Toast.makeText(MyApplication.getContext(),"宝妈的血糖值高了！！",Toast.LENGTH_SHORT).show();
                             imageaTwoHourBooldSugar.setTextColor(Color.rgb(255, 0, 0));
                         }
@@ -358,7 +358,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
                     public void onPicked(int selectedFirstIndex, int selectedSecondIndex) {
                         imageaTwoHourBooldSugarM.setText(options3Items.get(selectedFirstIndex)+"."+options4Items.get(selectedSecondIndex)+"mmol/L");
                         double booldSugar=Integer.parseInt(options3Items.get(selectedFirstIndex))+Integer.parseInt(options4Items.get(selectedSecondIndex))/100;
-                        if (booldSugar>7.8){
+                        if (booldSugar>6.7){
                             Toast.makeText(MyApplication.getContext(),"宝妈的血糖值高了！！",Toast.LENGTH_SHORT).show();
                             imageaTwoHourBooldSugarM.setTextColor(Color.rgb(255, 0, 0));
                         }
@@ -382,7 +382,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
                     public void onPicked(int selectedFirstIndex, int selectedSecondIndex) {
                         imageaTwoHourBooldSugarN.setText(options3Items.get(selectedFirstIndex)+"."+options4Items.get(selectedSecondIndex)+"mmol/L");
                         double booldSugar=Integer.parseInt(options3Items.get(selectedFirstIndex))+Integer.parseInt(options4Items.get(selectedSecondIndex))/100;
-                        if (booldSugar>7.8){
+                        if (booldSugar>6.7){
                             Toast.makeText(MyApplication.getContext(),"宝妈的血糖值高了！！",Toast.LENGTH_SHORT).show();
                             imageaTwoHourBooldSugarN.setTextColor(Color.rgb(255, 0, 0));
                         }

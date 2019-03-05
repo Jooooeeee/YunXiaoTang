@@ -150,8 +150,10 @@ public class WenZhangBtnActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String title="IOM指南体重管理表";
-                String content="";
-                sendWenActivity(title,content,1);
+                String content="·IOM指南体重管理表";
+                String content2="·每日摄入热量计算法\n" +
+                        "全日能量供给量（kcal）＝能量（kcal）/kg×理想体重（kg）。理想体重（kg）＝身高（cm）－105，每公斤体重摄入能量与BMI和体力劳动强度有关，见下表。\n";
+                sendWenActivity(title,content,content2,1);
             }
         });
         sport.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +204,14 @@ public class WenZhangBtnActivity extends AppCompatActivity {
         Intent intent=new Intent(WenZhangBtnActivity.this,WenActivity.class);
         intent.putExtra("title",titile);
         intent.putExtra("content",content);
+        intent.putExtra("isHaveImage",isHaveImage);
+        startActivity(intent);
+    }
+    public void sendWenActivity(String titile,String content,String content2,int isHaveImage){
+        Intent intent=new Intent(WenZhangBtnActivity.this,WenActivity.class);
+        intent.putExtra("title",titile);
+        intent.putExtra("content",content);
+        intent.putExtra("content2",content2);
         intent.putExtra("isHaveImage",isHaveImage);
         startActivity(intent);
     }

@@ -43,11 +43,29 @@ public class NewsContentFragment extends Fragment {
        if (isHaveImage==1){
             ImageView imageView=view.findViewById(R.id.a1457);
             imageView.setVisibility(View.VISIBLE);
+           ImageView imageView2=view.findViewById(R.id.power);
+           imageView2.setVisibility(View.VISIBLE);
         }
         else if (isHaveImage==2){
             View visibilty_layout_2=view.findViewById(R.id.aa);
             visibilty_layout_2.setVisibility(View.VISIBLE);
         }
     }
+    public void refresh(String newsTitle,String newsContent,String newsContent2,int isHaveImage){
+        View visibilty_layout_1=view.findViewById(R.id.visibilty_layout);
+        visibilty_layout_1.setVisibility(View.VISIBLE);
+        TextView newsTitleText=view.findViewById(R.id.news_title);
+        TextView newsContentText=view.findViewById(R.id.news_content);
+        TextView newsContentText2=view.findViewById(R.id.news_content2);
+        newsTitleText.setText(newsTitle);
+        newsContentText.setText(newsContent);
+        newsContentText2.setText(newsContent2);
+        if (isHaveImage==1){
+            ImageView imageView=view.findViewById(R.id.a1457);
+            imageView.setVisibility(View.VISIBLE);
+            ImageView imageView2=view.findViewById(R.id.power);
+            imageView2.setVisibility(View.VISIBLE);
+        }
 
+    }
 }
