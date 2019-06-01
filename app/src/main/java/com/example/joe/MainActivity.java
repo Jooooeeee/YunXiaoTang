@@ -1,6 +1,7 @@
 package com.example.joe;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -181,6 +183,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_user_tui:
                 Intent i=new Intent(MainActivity.this,WenZhangBtnActivity.class);
                 startActivity(i);
+                break;
+            case R.id.nav_share:
+                String imgPath=SystemUtils.getResourcesUri(this.getApplicationContext(),R.drawable.share);
+                Intent intent=new Intent(Intent.ACTION_SEND);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(imgPath));
+                startActivity(Intent.createChooser(intent, getTitle()));
+
                 break;
         }
         return true;
@@ -460,9 +470,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         editor.putString("curdate",calendarView.getCurYear()+"-"+DateUtils.fillZero(calendarView.getCurMonth())+"-"+calendarView.getCurDay());
         editor.apply();
     }
-
-
-
-
 }
 

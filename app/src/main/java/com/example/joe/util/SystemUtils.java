@@ -1,8 +1,12 @@
 package com.example.joe.util;
 
 import android.app.ActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.DrawableRes;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,5 +70,14 @@ public class SystemUtils {
         }
         return 0;
 
+    }
+    public static String getResourcesUri (Context context, @DrawableRes int id) {
+        Resources resources =context.getResources();
+        String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                resources.getResourcePackageName(id) + "/" +
+                resources.getResourceTypeName(id) + "/" +
+                resources.getResourceEntryName(id);
+
+        return uriPath;
     }
 }
