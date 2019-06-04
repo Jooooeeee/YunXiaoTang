@@ -15,10 +15,6 @@
             android:name=".MainActivity"
             android:label="孕小糖"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
@@ -55,13 +51,24 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".WenZhangBtnActivity"
+        <activity
+            android:name=".WenZhangBtnActivity"
             android:label="宝妈的选择文章"
             android:launchMode="singleTask" />
-        <activity android:name=".WenActivity"
+        <activity
+            android:name=".WenActivity"
             android:label="宝妈的文章"
-            android:launchMode="singleTask"
-            ></activity>
+            android:launchMode="singleTask" />
+
+        <activity android:name=".StartActivity"
+            android:theme="@style/AppTheme.Launcher"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

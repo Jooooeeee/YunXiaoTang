@@ -27,6 +27,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -420,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 进行闹铃注册
         am=(AlarmManager)getSystemService(ALARM_SERVICE);
 
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, my_Time, AlarmManager.INTERVAL_DAY, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, my_Time, AlarmManager.INTERVAL_DAY, pi);
     }
 
     private void isShowNotification(){
@@ -469,6 +470,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.putString("curdate",calendarView.getCurYear()+"-"+DateUtils.fillZero(calendarView.getCurMonth())+"-"+calendarView.getCurDay());
         editor.apply();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //实现只在冷启动时显示启动页，即点击返回键与点击HOME键退出效果一致
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 

@@ -120,7 +120,6 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
         }
         if (booldSugar!=0.0){
             spannableString3=new SpannableString(booldSugar+"mmol/L");
-
         }else {
             spannableString3=new SpannableString("A");
             spannableString3.setSpan(imageSpan,0,1,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
